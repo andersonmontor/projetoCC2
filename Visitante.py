@@ -8,7 +8,8 @@ class TabelaServico:
     listaServicos = []
 
     def adicionarServico(self, nome):
-        self.listaServicos.append(TabelaAtributo(nome))
+        novoServico = TabelaAtributo(nome)
+        self.listaServicos.append(novoServico)
 
     def obterServico(self, nome):
         for serv in self.listaServicos:
@@ -30,12 +31,11 @@ class EntradaAtributo:
         self.tipoVar = tipoVar
 
 
-class TabelaAtributo: #serviço
-
-    listaAtributos = []
+class TabelaAtributo: #serviço    
 
     def __init__(self, nomeServico):
         self.nomeServico = nomeServico
+        self.listaAtributos = []
 
     def adicionarEntrada(self, nome, tipoAtr, tipoVar):
         self.listaAtributos.append(EntradaAtributo(nome, tipoAtr, tipoVar))

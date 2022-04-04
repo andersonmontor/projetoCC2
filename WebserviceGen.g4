@@ -12,7 +12,7 @@ linhaatributo: TIPO_ATR ':' IDENT ':' TIPO_VAR ;
 
 TIPO_ATR: ('in' | 'out');
 
-TIPO_VAR: ('string' | 'float' | 'int');
+TIPO_VAR: ('str' | 'float' | 'int');
 
 IDENT: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'0'..'9')*;
 

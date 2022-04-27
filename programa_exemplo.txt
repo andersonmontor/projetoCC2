@@ -1,0 +1,32 @@
+servico criarProduto[put]{
+    in: codigo:str,
+    in: nome:str,
+    in: descricao:str,
+    in: preco:float,
+    out: codigo:int,
+    out: msg:str
+}
+
+servico criarCliente[post]{
+    in[path]: cpf:str,
+    in[query]: nome:str,
+    in: endereco:str,
+    out: cpf:int,
+    out: msg:str
+}
+
+servico consultarCliente[get]{
+    in[path]: cpf:str,
+    out: nome:str,
+    out: endereco:str
+}
+
+servico excluirCliente[delete]{
+    in[path]: cpf:str,
+    out: msg:str
+}
+
+servico excluirProduto[delete]{
+    in[query]: codigo:str,
+    out: msg:str
+}

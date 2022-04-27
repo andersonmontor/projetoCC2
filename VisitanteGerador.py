@@ -21,7 +21,6 @@ class VisitanteGerador(WebserviceGenVisitor):
         prefixoOut = 'out_'
 
         nome = ctx.IDENT().getText()
-        print(nome, ctx.TIPO_HTTP())
         tipoHttp = 'get'
         if ctx.TIPO_HTTP() != None:
             tipoHttp = ctx.TIPO_HTTP().getText()
@@ -33,8 +32,7 @@ class VisitanteGerador(WebserviceGenVisitor):
             tipoAtributo = atributo.TIPO_ATR().getText()
             tipoValor = atributo.TIPO_VAR().getText()
             nomeAtributo = atributo.IDENT().getText()
-            tipoIn = atributo.TIPO_ATR_IN()
-            print(nomeAtributo, tipoIn)          
+            tipoIn = atributo.TIPO_ATR_IN() 
             if tipoAtributo == 'in':
                 self.saida += '%s: %s, ' % (nomeAtributo, tipoValor)
                 if tipoIn != None and tipoIn.getText() == 'path':

@@ -75,6 +75,10 @@ class Visitante(WebserviceGenVisitor):
         nomeAtributo = ctx.IDENT().getText()
         tipoAtributo = ctx.TIPO_ATR().getText()
         tipoValor = ctx.TIPO_VAR().getText()
+        tipoIn = ctx.TIPO_ATR_IN()
+
+        if (tipoAtributo != 'in' and tipoIn != None):
+            raise Exception('Erro semantico: atributo %s:%s do serviço %s é out, mas contém parametro in' % (nomeAtributo, tipoAtributo, servico.nomeServico))
 
         if (servico.existeAtributo(nomeAtributo, tipoAtributo)):
             raise Exception('Erro semantico: atributo %s:%s duplicado para o serviço %s' % (nomeAtributo, tipoAtributo, servico.nomeServico))

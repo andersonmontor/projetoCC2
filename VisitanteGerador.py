@@ -16,20 +16,39 @@ class VisitanteGerador(WebserviceGenVisitor):
     # Visit a parse tree produced by WebserviceGenParser#servico.
     def visitServico(self, ctx:WebserviceGenParser.ServicoContext):
         atributosOut = []
+        atributosInPath = []
         mapInicializacaoOut = {'str': "''", 'int': '0', 'float': '0.0'}
         prefixoOut = 'out_'
 
         nome = ctx.IDENT().getText()
-        self.saida += '@app.get("/%s/")\n' % nome
+        print(nome, ctx.TIPO_HTTP())
+        tipoHttp = 'get'
+        if ctx.TIPO_HTTP() != None:
+            tipoHttp = ctx.TIPO_HTTP().getText()
+
+        #pathServico = '@app.%s("/%s/")\n' % (tipoHttp, nome)
+        self.saida += '***TROCAR_DEPOIS***'
         self.saida += 'async def %s(' % nome
         for atributo in ctx.linhaatributo():
             tipoAtributo = atributo.TIPO_ATR().getText()
             tipoValor = atributo.TIPO_VAR().getText()
-            nomeAtributo = atributo.IDENT().getText()            
+            nomeAtributo = atributo.IDENT().getText()
+            tipoIn = atributo.TIPO_ATR_IN()
+            print(nomeAtributo, tipoIn)          
             if tipoAtributo == 'in':
                 self.saida += '%s: %s, ' % (nomeAtributo, tipoValor)
+                if tipoIn != None and tipoIn.getText() == 'path':
+                    atributosInPath.append(nomeAtributo)
             else:
                 atributosOut.append([nomeAtributo, tipoValor])
+
+        linhaAtrsPath = ''
+        
+        for atrPath in atributosInPath:
+            linhaAtrsPath += '{%s}/' % atrPath
+
+        pathServico = '@app.%s("/%s/%s")\n' % (tipoHttp, nome, linhaAtrsPath)
+        self.saida = self.saida.replace('***TROCAR_DEPOIS***', pathServico)
 
         self.saida = self.saida.strip(', ')
         self.saida += '):\n'
